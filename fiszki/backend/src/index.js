@@ -1,15 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const groupsRouter = require('./routes/groups');
-const cardsRouter = require('./routes/cards');
+const express = require("express");
+const cors = require("cors");
+const groupsRouter = require("./routes/groups");
+const cardsRouter = require("./routes/cards");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/groups', groupsRouter);
-app.use('/api/cards', cardsRouter);
+app.use("/api/groups", groupsRouter);
+app.use("/api/cards", cardsRouter);
 
 const PORT = process.env.PORT || 3001;
 

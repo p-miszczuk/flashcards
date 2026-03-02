@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE = 'http://localhost:3001/api';
+const BASE = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
-export type CardStatus = 'TO_LEARN' | 'LEARNED';
+export type CardStatus = "TO_LEARN" | "LEARNED";
 
 export type Card = {
   id: number;
@@ -16,7 +16,9 @@ export type Card = {
 };
 
 export const getCards = (groupId: number): Promise<Card[]> =>
-  axios.get<Card[]>(`${BASE}/cards`, { params: { groupId } }).then((r) => r.data);
+  axios
+    .get<Card[]>(`${BASE}/cards`, { params: { groupId } })
+    .then((r) => r.data);
 
 export const createCard = (data: {
   front: string;
@@ -24,12 +26,16 @@ export const createCard = (data: {
   sentence?: string;
   sentenceTranslation?: string;
   groupId: number;
-}): Promise<Card> => axios.post<Card>(`${BASE}/cards`, data).then((r) => r.data);
+}): Promise<Card> =>
+  axios.post<Card>(`${BASE}/cards`, data).then((r) => r.data);
 
 export const updateCard = (
   id: number,
-  data: Partial<Pick<Card, 'front' | 'back' | 'sentence' | 'sentenceTranslation' | 'status'>>
-): Promise<Card> => axios.put<Card>(`${BASE}/cards/${id}`, data).then((r) => r.data);
+  data: Partial<
+    Pick<Card, "front" | "back" | "sentence" | "sentenceTranslation" | "status">
+  >,
+): Promise<Card> =>
+  axios.put<Card>(`${BASE}/cards/${id}`, data).then((r) => r.data);
 
 export const deleteCard = (id: number): Promise<void> =>
   axios.delete(`${BASE}/cards/${id}`).then(() => undefined);

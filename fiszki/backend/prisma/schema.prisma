@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Group {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  cards     Card[]
+}
+
+model Card {
+  id                 Int      @id @default(autoincrement())
+  front              String
+  back               String
+  sentence            String?
+  sentenceTranslation String?
+  status             String   @default("TO_LEARN")
+  createdAt DateTime @default(now())
+  groupId   Int
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
